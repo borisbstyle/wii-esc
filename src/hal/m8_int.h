@@ -49,4 +49,22 @@ inline void AttachPPM() {
 }
 #endif
 
+#if (rcp_in == 0)
+#error Not implemented yet
+/*
+ISR(TIMER1_CAPT_vect) {
+  uint16_t time = ICR1;
+  uint8_t state = (PINB & _BV(0));
+  rx_ppm_callback(time, state);
+}
+
+inline void AttachPPM() {
+
+  PORTB  |= _BV(0);
+  MCUCR = (MCUCR & ~((1 << ISC00) | (1 << ISC01))) | (1 << ISC00);
+  GICR |= (1 << INT0);
+}
+*/
+#endif
+
 #endif
