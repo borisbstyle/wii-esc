@@ -7,6 +7,7 @@
 #ifndef _RCT45NFS_H_
 #define _RCT45NFS_H_
 
+
 //*********************
 // PORT B definitions *
 //*********************
@@ -18,15 +19,15 @@
 
 #define PORTB_INIT      0
 #define PORTB_DD        (1<<AnFET)+(1<<BnFET)+(1<<CnFET)
-#define BRAKE_PB        0
+#define BRAKE_PB        (1<<AnFET)+(1<<BnFET)+(1<<CnFET)
 
-inline void DebugLEDOn()     {PORTB |= _BV(DbgLED);}
-inline void DebugLEDOff()    {PORTB &= ~_BV(DbgLED);}
-inline void DebugLEDToggle() {PORTB ^= _BV(DbgLED);}
+//inline void DebugLEDOn()     {PORTB |= _BV(DbgLED);}
+//inline void DebugLEDOff()    {PORTB &= ~_BV(DbgLED);}
+//inline void DebugLEDToggle() {PORTB ^= _BV(DbgLED);}
 
-inline void DebugStrOn()     {PORTB |= _BV(DbgStr);}
-inline void DebugStrOff()    {PORTB &= ~_BV(DbgStr);}
-inline void DebugStrToggle() {PORTB ^= _BV(DbgStr);}
+//inline void DebugStrOn()     {PORTB |= _BV(DbgStr);}
+//inline void DebugStrOff()    {PORTB &= ~_BV(DbgStr);}
+//inline void DebugStrToggle() {PORTB ^= _BV(DbgStr);}
 
 //*********************
 // PORT C definitions *
