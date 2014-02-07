@@ -70,7 +70,7 @@ inline void AttachPPM() {
   PORTB |= (1 << ICP); // Pullup enabled
   DDRB &= ~(1 << ICP); // Set as input
   TCCR1B |= (1 << ICNC1) | (1 << ICES1); // Noise cancel, rising edge trigger
-  TIMSK |= (1 << TICIE1) | (1 << TOIE1); // Timer input capture interrupt enable, overflow enable
+  TIMSK |= (1 << TICIE1); // Timer input capture
   TIFR = (1 << ICF1); // Clear input capture flag
 }
 #endif
