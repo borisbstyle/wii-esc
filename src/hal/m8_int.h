@@ -68,7 +68,7 @@ ISR(TIMER1_CAPT_vect) {
 
 inline void AttachPPM() {
   PORTB |= (1 << ICP); // Pullup enabled
-  DDRB &= ~(1 << ICP); // Set as input
+  // DDRB &= ~(1 << ICP); // Set as input
   TCCR1B |= (1 << ICNC1) | (1 << ICES1); // Noise cancel, rising edge trigger
   TIMSK |= (1 << TICIE1); // Timer input capture
   TIFR = (1 << ICF1); // Clear input capture flag
