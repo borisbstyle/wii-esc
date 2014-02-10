@@ -65,32 +65,5 @@ inline void AttachPPM() {
   GICR |= (1 << INT1);
 }
 #endif
-/*
-#if (rcp_in == 0)
-#define ICP PINB0
-ISR(TIMER1_CAPT_vect) {
-  uint16_t time = ICR1;
-  uint8_t state = (TCCR1B & _BV(ICES1));
-  if (state)
-  {
-    TCCR1B &= ~_BV(ICES1); // falling edge trigger
-  }
-  else
-  {
-    TCCR1B |= _BV(ICES1); // rising edge trigger
-  }
-  TIFR = (1 << ICF1); // Clear input capture flag
-  rx_ppm_callback(time, state);
-}
 
-inline void AttachPPM() {
-  //GICR &= ~(1 << INT0) + ~(1 << INT1);
-  PORTB |= _BV(0); // Pullup enabled
-  //DDRB &= ~(1 << ICP); // Set as input
-  TCCR1B |= (1 << ICES1)+(1 << ICNC1); // Noise cancel, rising edge trigger
-  TIMSK |= (1 << TICIE1); // Timer input capture
-  TIFR = (1 << ICF1); // Clear input capture flag
-}
-#endif
-*/
 #endif
