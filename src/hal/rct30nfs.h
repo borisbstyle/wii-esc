@@ -10,28 +10,28 @@
 //*********************
 // PORT B definitions *
 //*********************
-//#define DbgLED          5
-//#define DbgStr          4
+#define DbgLED          5
+#define DbgStr          4
 #define CnFET           1
 #define rcp_in          0
 #define PORTB_INIT      0
-#define PORTB_DD        (1<<CnFET)
+#define PORTB_DD        _BV(CnFET)
 #define BRAKE_PB        0
 
-//inline void DebugLEDOn()     {PORTB |= _BV(DbgLED);}
-//inline void DebugLEDOff()    {PORTB &= ~_BV(DbgLED);}
-//inline void DebugLEDToggle() {PORTB ^= _BV(DbgLED);}
+inline void DebugLEDOn()     {PORTB |= _BV(DbgLED);}
+inline void DebugLEDOff()    {PORTB &= ~_BV(DbgLED);}
+inline void DebugLEDToggle() {PORTB ^= _BV(DbgLED);}
 
-//inline void DebugStrOn()     {PORTB |= _BV(DbgStr);}
-//inline void DebugStrOff()    {PORTB &= ~_BV(DbgStr);}
-//inline void DebugStrToggle() {PORTB ^= _BV(DbgStr);}
+inline void DebugStrOn()     {PORTB |= _BV(DbgStr);}
+inline void DebugStrOff()    {PORTB &= ~_BV(DbgStr);}
+inline void DebugStrToggle() {PORTB ^= _BV(DbgStr);}
 
 //*********************
 // PORT C definitions *
 //*********************
 #define AnRef           2
 
-#define PORTC_INIT      (1<<AnRef)
+#define PORTC_INIT      0
 #define PORTC_DD        (1<<AnRef)
 #define BRAKE_PC        0
 
@@ -45,9 +45,10 @@
 #define BnFET           7
 #define CpFET           2
 
-#define PORTD_INIT      (1<<ApFET)+(1<<BpFET)+(1<<CpFET)
-#define PORTD_DD        (1<<ApFET)+(1<<AnFET)+(1<<BpFET)+(1<<BnFET)+(1<<CpFET)
+#define PORTD_INIT      _BV(ApFET) | _BV(BpFET) | _BV(CpFET)
+#define PORTD_DD        _BV(ApFET) | _BV(AnFET) | _BV(BpFET) | _BV(BnFET) | _BV(CpFET)
 #define BRAKE_PD        0
+
 
 inline void ApFETOn()   {PORTD &= ~_BV(ApFET);}
 inline void ApFETOff()  {PORTD |=  _BV(ApFET);}
@@ -94,7 +95,7 @@ inline void Board_Init() {
   TIMSK = 0;
   // Timer1
   TCCR1A = 0;
-  TCCR1B |= _BV(CS11);                 /* div 8 clock prescaler */
+  TCCR1B = _BV(CS11);                 /* div 8 clock prescaler */
   PORTB = PORTB_INIT; DDRB = PORTB_DD;
   PORTC = PORTC_INIT; DDRC = PORTC_DD;
   PORTD = PORTD_INIT; DDRD = PORTD_DD;

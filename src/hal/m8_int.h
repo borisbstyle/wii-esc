@@ -20,6 +20,23 @@
 #define _M8_INT_H_
 
 // RX input capture
+#if (rcp_in == 0)
+ISR(TIMER1_CAPT_vect) {
+  uint16_t time = ICR1;
+  uint8_t state = (TCCR1B & _BV(ICES1));
+  if (state) TCCR1B &= ~_BV(ICES1); else TCCR1B |= _BV(ICES1);
+  TIFR = _BV(ICF1);
+  rx_ppm_callback(time, state);
+}
+
+inline void AttachPPM() {
+  PORTB |= _BV(0);
+  //DDRB &= ~_BV(PINB0);
+  TCCR1B |= _BV(ICNC1) | _BV(ICES1);
+  TIMSK |= _BV(TICIE1);
+  TIFR = _BV(ICF1);
+}
+#endif
 
 #if (rcp_in == 2)
 ISR(INT0_vect) {
@@ -44,11 +61,11 @@ ISR(INT1_vect) {
 
 inline void AttachPPM() {
   PORTD  |= _BV(3);
-  MCUCR = (MCUCR & ~((1 << ISC10) | (1 << ISC11))) | (1 << ISC10);
+  MCUCR = (MCUCR & ~((1 << ISC10) | (1 +<< ISC11))) | (1 << ISC10);
   GICR |= (1 << INT1);
 }
 #endif
-
+/*
 #if (rcp_in == 0)
 #define ICP PINB0
 ISR(TIMER1_CAPT_vect) {
@@ -67,12 +84,13 @@ ISR(TIMER1_CAPT_vect) {
 }
 
 inline void AttachPPM() {
-  PORTB |= (1 << ICP); // Pullup enabled
-  // DDRB &= ~(1 << ICP); // Set as input
-  TCCR1B |= (1 << ICNC1) | (1 << ICES1); // Noise cancel, rising edge trigger
+  //GICR &= ~(1 << INT0) + ~(1 << INT1);
+  PORTB |= _BV(0); // Pullup enabled
+  //DDRB &= ~(1 << ICP); // Set as input
+  TCCR1B |= (1 << ICES1)+(1 << ICNC1); // Noise cancel, rising edge trigger
   TIMSK |= (1 << TICIE1); // Timer input capture
   TIFR = (1 << ICF1); // Clear input capture flag
 }
 #endif
-
+*/
 #endif
