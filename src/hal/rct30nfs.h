@@ -14,6 +14,7 @@
 #define DbgStr          4
 #define CnFET           1
 #define rcp_in          0
+
 #define PORTB_INIT      0
 #define PORTB_DD        _BV(CnFET)
 #define BRAKE_PB        0
@@ -71,7 +72,6 @@ inline void CnFETOff()  {PORTB &= ~_BV(CnFET);}
 
 inline void ACInit() {
   ACMultiplexed();
-  //ACSR |= _BV(ACIC);
 }
 
 inline void ACPhaseA() {
